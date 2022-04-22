@@ -226,8 +226,6 @@ class DatePicker extends Component {
     if (action !== DatePickerAndroid.dismissedAction) {
       let timeMoment = Moment(this.state.date);
 
-      console.log(timeMoment)
-
       DateTimePickerAndroid.open({
         value: new Date(),
         mode: 'time',
