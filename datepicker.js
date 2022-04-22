@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import Style from './style';
 import Moment from 'moment';
+import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 
 const FORMATS = {
   'date': 'YYYY-MM-DD',
@@ -225,12 +226,28 @@ class DatePicker extends Component {
     if (action !== DatePickerAndroid.dismissedAction) {
       let timeMoment = Moment(this.state.date);
 
-      TimePickerAndroid.open({
+      console.log(timeMoment)
+
+      DateTimePickerAndroid.open({
+        value: new Date(),
+        mode: 'time',
+        onChange: (e) => {
+          const { timestamp } = e.nativeEvent;
+          const type = e.type;
+          if (timestamp) {
+            const hour = new Date(timestamp).getHours();
+            const minute = new Date(timestamp).getMinutes();
+            this.onDatetimeTimePicked(year, month, day, { type, hour, minute })
+          }
+        },
+      })
+
+      /*TimePickerAndroid.open({
         hour: timeMoment.hour(),
         minute: timeMoment.minutes(),
         is24Hour: is24Hour,
         mode: androidMode
-      }).then(this.onDatetimeTimePicked.bind(this, year, month, day));
+      }).then(this.onDatetimeTimePicked.bind(this, year, month, day));*/
     } else {
       this.onPressCancel();
     }
@@ -278,7 +295,7 @@ class DatePicker extends Component {
 
         let timeMoment = Moment(this.state.date);
 
-        TimePickerAndroid.open({
+        DateTimePickerAndroid.open({
           hour: timeMoment.hour(),
           minute: timeMoment.minutes(),
           is24Hour: is24Hour,
