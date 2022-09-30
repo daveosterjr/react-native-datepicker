@@ -67,7 +67,8 @@ class DatePicker extends Component {
         this.state.animatedHeight,
         {
           toValue: height,
-          duration: duration
+          duration: duration,
+          useNativeDriver: true
         }
       ).start();
     } else {
