@@ -32,7 +32,7 @@ class DatePicker extends Component {
     this.state = {
       date: this.getDate(),
       modalVisible: false,
-      animatedHeight: new Animated.Value(0),
+      animatedHeight: 0,
       allowPointerEvents: true
     };
 
@@ -60,29 +60,7 @@ class DatePicker extends Component {
   setModalVisible(visible) {
     const {height, duration} = this.props;
 
-    // slide animation
-    if (visible) {
-      this.setState({modalVisible: visible});
-      return Animated.timing(
-        this.state.animatedHeight,
-        {
-          toValue: height,
-          duration: duration,
-          useNativeDriver: true
-        }
-      ).start();
-    } else {
-      return Animated.timing(
-        this.state.animatedHeight,
-        {
-          toValue: 0,
-          duration: duration,
-          useNativeDriver: true
-        }
-      ).start(() => {
-        this.setState({modalVisible: visible});
-      });
-    }
+    this.setState({modalVisible: visible, animatedHeight: height});
   }
 
   onStartShouldSetResponder(e) {
