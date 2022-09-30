@@ -382,8 +382,8 @@ class DatePicker extends Component {
                   underlayColor={'#fff'}
                   style={{flex: 1}}
                 >
-                  <Animated.View
-                    style={[Style.datePickerCon, customStyles.datePickerCon]}
+                  <View
+                    style={[Style.datePickerCon, { height: this.state.animatedHeight }, customStyles.datePickerCon]}
                   >
                     <View pointerEvents={this.state.allowPointerEvents ? 'auto' : 'none'}>
                       <DatePickerIOS
@@ -423,7 +423,7 @@ class DatePicker extends Component {
                         {confirmBtnText}
                       </Text>
                     </TouchableComponent>
-                  </Animated.View>
+                  </View>
                 </TouchableComponent>
               </TouchableComponent>
             </View>
