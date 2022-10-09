@@ -445,10 +445,10 @@ class DatePicker extends Component {
                         {confirmBtnText}
                       </Text>
                     </TouchableComponent>
-                  </View>
+                  </Animated.View>
                 </TouchableComponent>
               </TouchableComponent>
-            </Animated.View>
+            </View>
           </Modal>}
         </View>
       </TouchableComponent>
