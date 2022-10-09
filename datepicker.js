@@ -32,7 +32,7 @@ class DatePicker extends Component {
     this.state = {
       date: this.getDate(),
       modalVisible: false,
-      animatedHeight: 0,
+      animatedHeight: new Animated.Value(0),
       allowPointerEvents: true
     };
 
@@ -59,8 +59,30 @@ class DatePicker extends Component {
 
   setModalVisible(visible) {
     const {height, duration} = this.props;
-
-    this.setState({modalVisible: visible, animatedHeight: height});
+    
+    // slide animation
+     if (visible) {
+       this.setState({modalVisible: visible});
+       return Animated.timing(
+         this.state.animatedHeight,
+         {
+           toValue: height,
+           duration: duration,
+           useNativeDriver: true
+         }
+       ).start();
+     } else {
+       return Animated.timing(
+         this.state.animatedHeight,
+         {
+           toValue: 0,
+           duration: duration,
+           useNativeDriver: true
+         }
+       ).start(() => {
+         this.setState({modalVisible: visible});
+       });
+     }
   }
 
   onStartShouldSetResponder(e) {
@@ -382,7 +404,7 @@ class DatePicker extends Component {
                   underlayColor={'#fff'}
                   style={{flex: 1}}
                 >
-                  <View
+                  <Animated.View
                     style={[Style.datePickerCon, { height: this.state.animatedHeight }, customStyles.datePickerCon]}
                   >
                     <View pointerEvents={this.state.allowPointerEvents ? 'auto' : 'none'}>
@@ -426,7 +448,7 @@ class DatePicker extends Component {
                   </View>
                 </TouchableComponent>
               </TouchableComponent>
-            </View>
+            </Animated.View>
           </Modal>}
         </View>
       </TouchableComponent>
