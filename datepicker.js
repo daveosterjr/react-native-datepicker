@@ -200,7 +200,7 @@ class DatePicker extends Component {
   }
 
   onDatePicked({action, year, month, day}) {
-    if (action !== DatePickerAndroid.dismissedAction) {
+    if (action !== "dismissed") {
       this.setState({
         date: new Date(year, month, day)
       });
@@ -297,7 +297,17 @@ class DatePicker extends Component {
         DateTimePickerAndroid.open({
           value: this.state.date,
           mode: androidMode,
-        }).then(this.onDatePicked);
+          onChange: (e) => {
+            const { timestamp } = e.nativeEvent;
+            const action = e.type;
+            if (timestamp) {
+              const year = new Date(timestamp).getFullYear();
+              const month = new Date(timestamp).getMonth();
+              const day = new Date(timestamp).getDate();
+              this.onDatePicked({ action, year, month, day})
+            }
+          },
+        })
 
       } else if (mode === 'time') {
         // 选时间
@@ -329,8 +339,6 @@ class DatePicker extends Component {
             const { timestamp } = e.nativeEvent;
             const action = e.type;
             if (timestamp) {
-              const hour = new Date(timestamp).getHours();
-              const minute = new Date(timestamp).getMinutes();
               const year = new Date(timestamp).getFullYear();
               const month = new Date(timestamp).getMonth();
               const day = new Date(timestamp).getDate();
