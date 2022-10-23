@@ -253,7 +253,7 @@ class DatePicker extends Component {
     }
   }
 
-  
+
 
   onDatetimeTimePicked(year, month, day, {action, hour, minute}) {
     if (action !== "dismissed") {
@@ -264,7 +264,7 @@ class DatePicker extends Component {
     } else {
       this.onPressCancel();
     }
-  
+
   }
 
   onPressDate() {
@@ -297,6 +297,8 @@ class DatePicker extends Component {
         DateTimePickerAndroid.open({
           value: this.state.date,
           mode: androidMode,
+          minimumDate: minDate && this.getDate(minDate),
+          maximumDate: maxDate && this.getDate(maxDate),
           onChange: (e) => {
             const { timestamp } = e.nativeEvent;
             const action = e.type;
@@ -333,8 +335,8 @@ class DatePicker extends Component {
         DateTimePickerAndroid.open({
           value: this.state.date,
           mode: androidMode,
-          minDate: minDate && this.getDate(minDate),
-          maxDate: maxDate && this.getDate(maxDate),
+          minimumDate: minDate && this.getDate(minDate),
+          maximumDate: maxDate && this.getDate(maxDate),
           onChange: (e) => {
             const { timestamp } = e.nativeEvent;
             const action = e.type;
